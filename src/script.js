@@ -11,12 +11,8 @@ const cursor = {
 window.addEventListener('mousemove', (event)=> {
     cursor.x =  event.clientX / sizes.width -0.5
     cursor.y =  - (event.clientY / sizes.height -0.5)
-
  })
 
-/**
- * Base
- */
 // Canvas
 const canvas = document.querySelector('canvas.webgl')
 
@@ -38,8 +34,6 @@ scene.add(mesh)
 
 // Camera
 const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height)
-//camera.position.x = 2
-//camera.position.y = 2
 camera.position.z = 3
 camera.lookAt(mesh.position)
 scene.add(camera)
@@ -60,18 +54,6 @@ const clock = new THREE.Clock()
 const tick = () =>
 {
     const elapsedTime = clock.getElapsedTime()
-
-    // Update objects
-    //mesh.rotation.y = elapsedTime;
-
-    //update camera 
-    /*
-    camera.position.x = Math.sin(cursor.x * Math.PI *2) *3
-    camera.position.z = Math.cos(cursor.x * Math.PI *2) *3
-    camera.position.y = Math.sin(cursor.y * Math.PI *2) *3
-    camera.position.z = Math.cos(cursor.y * Math.PI *2) *3
-    camera.lookAt(mesh.position)
-    */
 
     controls.update()
 
