@@ -1,7 +1,6 @@
 import * as THREE from 'three'
 import {OrbitControls} from 'three/addons/controls/Orbitcontrols.js'
-console.log(OrbitControls)
-
+ 
 //Cursor
 const cursor = {
     x:0,
@@ -18,9 +17,36 @@ const canvas = document.querySelector('canvas.webgl')
 
 // Sizes
 const sizes = {
-    width: 800,
-    height: 600
+    width: window.innerWidth,
+    height: window.innerHeight
 }
+
+window.addEventListener('resize', ()=>
+{
+    //Update Sizes
+    sizes.width = window.innerWidth
+    sizes.height = window.innerHeight
+
+    //Update Camera
+    camera.aspect = sizes.width/ sizes.height
+    camera.updateProjectionMatrix()
+
+    //Update Renderer
+    renderer.setSize(sizes.width, sizes.height)
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+})
+
+window.addEventListener('dblclick', () =>
+{
+    if(!document.fullscreenElement)
+    {
+        canvas.requestFullscreen()
+    }
+    else
+    {
+        document.exitFullscreen()
+    }
+})
 
 // Scene
 const scene = new THREE.Scene()
