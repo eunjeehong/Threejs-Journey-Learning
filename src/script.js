@@ -1,5 +1,31 @@
+import './style.css'
 import * as THREE from 'three'
 import {OrbitControls} from 'three/addons/controls/Orbitcontrols.js'
+import gsap from 'gsap'
+import * as dat from 'dat.gui'
+
+console.log(dat)
+
+/**
+ * Debug
+ */
+const gui = new dat.GUI()
+const parameters = {
+    color: 0xff0000,
+    spin:() =>
+    {
+        gsap.to(mesh.rotation, {duration:1, y: mesh.rotation.y+10})
+    }
+}
+
+gui
+.addColor(parameters, 'color')
+.onChange(() => {
+    material.color.set(parameters.color)
+})
+
+gui
+    .add(parameters, 'spin')
  
 //Cursor
 const cursor = {
@@ -52,11 +78,32 @@ window.addEventListener('dblclick', () =>
 const scene = new THREE.Scene()
 
 // Object
+const geometry = new THREE.BoxBufferGeometry(1,1,1)
+const material = new THREE.MeshBasicMaterial({color:parameters.color})
+const mesh = new THREE.Mesh(geometry, material)
+/*
 const mesh = new THREE.Mesh(
-    new THREE.BoxGeometry(1, 1, 1, 5, 5, 5),
+    new THREE.BoxGeometry(1, 1, 1),
     new THREE.MeshBasicMaterial({ color: 0xff0000 })
 )
+*/
 scene.add(mesh)
+
+//Debug
+gui
+.add(mesh.position, 'y')
+.min(-3)
+.max(3)
+.step(0.01)
+.name('elevation')
+
+gui
+.add(mesh,'visible')
+
+gui
+.add(mesh.material,'wireframe')
+
+ 
 
 // Camera
 const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height)
